@@ -77,3 +77,20 @@ class GeneratingThread: Thread {
         storage.add(chip: Chip.make())
     }
 }
+
+// MARK: Working Thread
+
+class WorkingThread: Thread {
+    private let storage: ChipStorage
+    
+    init(storage: ChipStorage) {
+        self.storage = storage
+    }
+    
+    override func main() {
+        repeat {
+            storage.remove().sodering()
+            print("Soldering chip")
+        } while storage.isAvailable || storage.isEmpty
+    }
+}
