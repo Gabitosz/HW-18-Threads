@@ -94,3 +94,15 @@ class WorkingThread: Thread {
         } while storage.isAvailable || storage.isEmpty
     }
 }
+
+// MARK: Objects
+
+let chipStorage = ChipStorage()
+let generatingThread = GeneratingThread(storage: chipStorage)
+let workingThread = WorkingThread(storage: chipStorage)
+
+generatingThread.start()
+workingThread.start()
+generatingThread.cancel()
+workingThread.cancel()
+
