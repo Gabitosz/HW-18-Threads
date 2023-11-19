@@ -56,3 +56,24 @@ class ChipStorage {
         return storage.removeLast()
     }
 }
+
+// MARK: Generating Thread
+
+class GeneratingThread: Thread {
+    private let storage: ChipStorage
+    private var timer = Timer()
+    
+    init(storage: ChipStorage) {
+        self.storage = storage
+    }
+    
+    override func main() {
+        timer = Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(generateChip), userInfo: nil, repeats: true)
+        RunLoop.current.add(timer, forMode: .common)
+        RunLoop.current.run(until: Date.init(timeIntervalSinceNow: 20))
+    }
+    
+    @objc func generateChip() {
+        storage.add(chip: Chip.make())
+    }
+}
